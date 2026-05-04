@@ -131,9 +131,10 @@ def get_summary():
 
 
 # Initialize DB before first request (important for hosting)
-@app.before_first_request
 def setup():
     init_db()
+
+setup()
 
 
 # Run app (production-safe)
