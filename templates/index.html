@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Finance Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+
+  <div class="app">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="logo">
+        <span class="logo-icon">◈</span>
+        <span class="logo-text">FINTRACK</span>
+      </div>
+
+      <nav class="nav">
+        <button class="nav-btn active" onclick="showSection('dashboard')">
+          <span class="nav-icon">▦</span> Dashboard
+        </button>
+        <button class="nav-btn" onclick="showSection('transactions')">
+          <span class="nav-icon">≡</span> Transactions
+        </button>
+        <button class="nav-btn" onclick="showSection('add')">
+          <span class="nav-icon">+</span> Add New
+        </button>
+      </nav>
+
+      <div class="sidebar-footer">
+        <div class="month-picker-label">Viewing Month</div>
+        <input type="month" id="monthFilter" class="month-input" />
+        <button class="clear-btn" onclick="clearMonth()">Show All</button>
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- DASHBOARD SECTION -->
+      <section id="section-dashboard" class="section active">
+        <div class="page-header">
+          <h1>Dashboard</h1>
+          <p class="subtitle">Your financial overview</p>
+        </div>
+
+        <div class="cards-grid">
+          <div class="card card-balance">
+            <div class="card-label">Net Balance</div>
+            <div class="card-value" id="balance">$0.00</div>
+          </div>
+          <div class="card card-income">
+            <div class="card-label">Total Income</div>
+            <div class="card-value" id="income">$0.00</div>
+          </div>
+          <div class="card card-expense">
+            <div class="card-label">Total Expenses</div>
+            <div class="card-value" id="expenses">$0.00</div>
+          </div>
+        </div>
+
+        <div class="charts-row">
+          <div class="chart-box">
+            <div class="chart-title">Spending by Category</div>
+            <div class="chart-wrap">
+              <canvas id="pieChart"></canvas>
+            </div>
+          </div>
+          <div class="chart-box">
+            <div class="chart-title">Income vs Expenses</div>
+            <div class="chart-wrap">
+              <canvas id="barChart"></canvas>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TRANSACTIONS SECTION -->
+      <section id="section-transactions" class="section">
+        <div class="page-header">
+          <h1>Transactions</h1>
+          <p class="subtitle">All your records</p>
+        </div>
+        <div class="table-wrap">
+          <table class="txn-table">
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Type</th>
+                <th>Amount</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="txnTableBody">
+              <tr><td colspan="6" class="empty-row">No transactions yet.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- ADD SECTION -->
+      <section id="section-add" class="section">
+        <div class="page-header">
+          <h1>Add Transaction</h1>
+          <p class="subtitle">Log income or expense</p>
+        </div>
+
+        <div class="form-card">
+          <div class="form-group">
+            <label>Title</label>
+            <input type="text" id="f-title" placeholder="e.g. Grocery run" />
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Amount ($)</label>
+              <input type="number" id="f-amount" placeholder="0.00" min="0" step="0.01" />
+            </div>
+            <div class="form-group">
+              <label>Type</label>
+              <select id="f-type">
+                <option value="expense">Expense</option>
+                <option value="income">Income</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>Category</label>
+              <select id="f-category">
+                <option value="Food">Food</option>
+                <option value="Transport">Transport</option>
+                <option value="Housing">Housing</option>
+                <option value="Entertainment">Entertainment</option>
+                <option value="Health">Health</option>
+                <option value="Salary">Salary</option>
+                <option value="Freelance">Freelance</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Date</label>
+              <input type="date" id="f-date" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Note (optional)</label>
+            <input type="text" id="f-note" placeholder="Any details..." />
+          </div>
+          <button class="submit-btn" onclick="submitTransaction()">Add Transaction</button>
+          <div id="form-msg" class="form-msg"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
